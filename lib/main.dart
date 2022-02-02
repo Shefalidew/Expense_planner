@@ -15,9 +15,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Personal Expenses',
-      theme: ThemeData(primarySwatch: Colors.purple,
-      accentColor: Colors.tealAccent,
-      fontFamily: 'Quicksand'),
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.tealAccent,
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline1: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
+      ),
       home: MyHomePage(),
     );
   }
@@ -30,7 +48,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
+    /*Transaction(
       id: 't1',
       title: 'New Shoes',
       amount: 60.00,
@@ -41,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Weekly Groceries',
       amount: 15.50,
       date: DateTime.now(),
-    )
+    )*/
   ];
 
   void _addNewTransaction(String txTitle, double txamount) {
@@ -73,7 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Expenses'),
+        title: Text(
+          'Personal Expenses',
+          style: TextStyle(
+            fontFamily: 'OpenSans',
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () => _startAddNewTransaction(context),
@@ -101,7 +124,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(backgroundColor: Theme.of(context).primaryColorLight,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColorLight,
         child: Icon(
           Icons.add,
           color: Colors.black,
