@@ -1,14 +1,15 @@
 import 'package:expenseplanner/models/transaction.dart';
+import 'package:expenseplanner/widgets/chart.dart';
 import 'package:expenseplanner/widgets/new_transactions.dart';
 import 'package:expenseplanner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  
 
   // This widget is the root of your application.
   @override
@@ -62,6 +63,16 @@ class _MyHomePageState extends State<MyHomePage> {
     )*/
   ];
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   void _addNewTransaction(String txTitle, double txamount) {
     final newTx = Transaction(
       title: txTitle,
@@ -112,14 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Card(
-              shadowColor: Theme.of(context).primaryColorLight,
-              child: Container(
-                child: Center(child: Text('CHART!')),
-                width: double.infinity,
-              ),
-              elevation: 5,
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),
